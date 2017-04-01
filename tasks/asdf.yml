@@ -23,13 +23,13 @@
 
 - name: register if erlang plugin is installed
   remote_user: "{{deployer}}"
-  command: bash -lc 'asdf plugin-list | grep erlang'
+  shell: asdf plugin-list | grep erlang
   register: erlang_plugin
 
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
   remote_user: "{{deployer}}"
-  command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
+  shell: asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
 
 - name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'"
