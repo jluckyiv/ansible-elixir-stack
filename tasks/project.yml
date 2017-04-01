@@ -10,12 +10,10 @@
 
 
 - name: "install tool versions"
+  command: bash -lc 'asdf install' chdir="{{ project_path }}"
   async: 1800
-  remote_user: "{{ deployer }}"
-  sudo: true
-  shell: "asdf install"
-  args:
-    chdir: "{{ project_path }}"
+  become: "{{primary_user_sudo}}"
+  become_user: "{{ deploy_user }}"
 
 
 - name: "generate secret key base"
