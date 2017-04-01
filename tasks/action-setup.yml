@@ -12,7 +12,7 @@
 
 - include: pip.yml
 - include: deployer-user.yml
-# - include: asdf.yml
+- include: asdf.yml
 
 
 - when: setup_postgres == True
