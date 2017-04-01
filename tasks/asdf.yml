@@ -32,6 +32,8 @@
 - name: register erlang plugin
   command: "bash -lc 'asdf plugin-list | grep erlang'"
   register: erlang_plugin
+  - debug:
+    msg: "erlang_plugin = {{ erlang_plugin }}"
 
 - name: "add erlang plugin"
   when: erlang_plugin != "erlang"
