@@ -15,6 +15,7 @@
     chdir: "{{project_path}}"
   register: erlang_plugin
   become_user: "{{deploy_user}}"
+  async: 1800
 
 
 - name: add erlang plugin
