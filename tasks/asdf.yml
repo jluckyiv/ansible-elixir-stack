@@ -11,47 +11,46 @@
   become: "{{primary_user_sudo}}"
 
 
-- name: "add asdf plugins"
-  command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
-  with_items:
-    - nodejs
-    - erlang
-    - elixir
+- name: register if erlang plugin is installed
+  command: "bash -lc 'asdf plugin-list | grep erlang'"
+  register: erlang_plugin
   become_user: "{{deploy_user}}"
   become: "{{primary_user_sudo}}"
 
-- name: register if erlang plugin is installed
-  remote_user: "{{deployer}}"
-  command: "bash -lc 'asdf plugin-list | grep erlang'"
-  register: erlang_plugin
 
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
-  remote_user: "{{deployer}}"
   command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
+
 
 - name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'"
   register: elixir_plugin
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 - name: add elixir plugin
   when: elixir_plugin.stdout != "elixir"
-  remote_user: "{{deployer}}"
   command: bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 - name: register if nodejs plugin is installed
   command: bash -lc 'asdf plugin-list | grep nodejs'
   register: nodejs_plugin
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 - name: add nodejs plugin
   when: nodejs_plugin.stdout != "nodejs"
-  remote_user: "{{deployer}}"
   command: bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 - name: add nodejs keys to keyring
-  remote_user: "{{deployer}}"
   command: bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
-# - name: "add elm plugin"
-#   remote_user: "{{deployer}}"
-#   command: "bash -lc 'asdf plugin-add elm https://github.com/vic/asdf-elm.git'"
