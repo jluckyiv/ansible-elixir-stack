@@ -44,7 +44,7 @@
   register: elixir_plugin
 
 - name: "add elixir plugin"
-  when: elixir_plugin != "elixir"
+  when: elixir_plugin.stdout != "elixir"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'"
 
@@ -53,7 +53,7 @@
   register: nodejs_plugin
 
 - name: "add nodejs plugin"
-  when: nodejs_plugin != "nodejs"
+  when: nodejs_plugin.stdout != "nodejs"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'"
 
