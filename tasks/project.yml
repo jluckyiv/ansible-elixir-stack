@@ -10,9 +10,11 @@
 
 
 - name: "install tool versions"
-  command: bash -lc 'asdf install' chdir="{{ project_path }}"
   async: 1800
   remote_user: "{{ deployer }}"
+  command: bash -lc 'asdf install'
+  args:
+    chdir: "{{ project_path }}"
 
 
 - name: "generate secret key base"
@@ -77,17 +79,23 @@
 
 
 - name: install hex
-  command: bash -lc "mix local.hex --force" chdir="{{ project_path }}"
   remote_user: "{{ deployer }}"
+  command: bash -lc "mix local.hex --force"
+  args:
+    chdir: "{{ project_path }}"
 
 
 - name: install rebar
-  command: bash -lc "mix local.rebar --force" chdir="{{ project_path }}"
   remote_user: "{{ deployer }}"
+  command: bash -lc "mix local.rebar --force"
+  args:
+    chdir: "{{ project_path }}"
 
 
 - name: "fetch mix dependencies"
-  command: bash -lc 'mix deps.get' chdir="{{ project_path }}"
+  command: bash -lc 'mix deps.get'
+  args:
+    chdir: "{{ project_path }}"
   async: 900
   remote_user: "{{ deployer }}"
   environment:
