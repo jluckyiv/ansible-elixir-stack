@@ -16,6 +16,15 @@
   args:
     chdir: "{{ project_path }}"
 
+- name: "reshim to avoid errors"
+  remote_user: "{{ deployer }}"
+  command: "bash -lc 'asdf reshim {{ item }}'"
+  with_items:
+    - nodejs
+    - erlang
+    - elixir
+  args:
+    chdir: "{{ project_path }}"
 
 - name: "generate secret key base"
   command: "openssl rand -base64 {{ secret_key_base_length }}"
