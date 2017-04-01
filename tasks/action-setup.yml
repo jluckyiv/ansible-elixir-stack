@@ -23,16 +23,16 @@
   include: postgres.yml
 
 
-- include: project.yml
-
-
-- when: build_frontend == True
-  include: frontend.yml
+# - include: project.yml
+#
+#
+# - when: build_frontend == True
+#   include: frontend.yml
 
 
 - include: nginx.yml
 - include: monit.yml
-- include: release.yml
+# - include: release.yml
 
 
 - name: start nginx using monit
