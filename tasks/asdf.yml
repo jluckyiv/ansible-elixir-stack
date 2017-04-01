@@ -17,7 +17,7 @@
 
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
-  command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git' chdir="{{project_path}}"
+  command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'" chdir="{{project_path}}"
   become_user: "{{deploy_user}}"
 
 
@@ -28,20 +28,20 @@
 
 - name: add elixir plugin
   when: elixir_plugin.stdout != "elixir"
-  command: bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git' chdir="{{project_path}}"
+  command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'" chdir="{{project_path}}"
   become_user: "{{deploy_user}}"
 
 - name: register if nodejs plugin is installed
-  command: bash -lc 'asdf plugin-list | grep nodejs' chdir="{{project_path}}"
+  command: "bash -lc 'asdf plugin-list | grep nodejs'" chdir="{{project_path}}"
   register: nodejs_plugin
   become_user: "{{deploy_user}}"
 
 - name: add nodejs plugin
   when: nodejs_plugin.stdout != "nodejs"
-  command: bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git' chdir="{{project_path}}"
+  command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'" chdir="{{project_path}}"
   become_user: "{{deploy_user}}"
 
 - name: add nodejs keys to keyring
-  command: bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'
+  command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
   become_user: "{{deploy_user}}"
 
