@@ -21,6 +21,14 @@
     create: yes
     line: ". $HOME/.asdf/completions/asdf.bash"
 
+- name: "remove asdf plugins"
+  command: "bash -lc 'asdf plugin-remove {{item}}"
+  with_items:
+    - nodejs
+    - erlang
+    - elixir
+
+  remote_user: "{{deployer}}"
 - name: "add erlang plugin"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
