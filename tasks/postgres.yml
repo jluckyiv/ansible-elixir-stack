@@ -23,11 +23,11 @@
     name: "{{ deployer }}"
     password: "{{ database_password }}"
     role_attr_flags: CREATEDB,SUPERUSER
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
 
 
 - name: "create database"
   postgresql_db: name="{{ database_name }}" encoding="UTF-8"
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
