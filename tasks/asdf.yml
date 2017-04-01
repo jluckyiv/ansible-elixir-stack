@@ -1,35 +1,34 @@
 ---
-- name: install asdf
-  remote_user: "{{deployer}}"
-  git:
-    repo: https://github.com/asdf-vm/asdf.git
-    dest: ~/.asdf
-    version: v0.2.1
-    update: yes
+- name: "install asdf"
+  git: repo="https://github.com/asdf-vm/asdf.git" dest="~/.asdf" update=yes
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
-- name: source asdf in bashrc
-  remote_user: "{{deployer}}"
-  lineinfile:
-    dest: ~/.bashrc
-    create: yes
-    line: . $HOME/.asdf/asdf.sh
 
-- name: asdf completions in bashrc
-  remote_user: "{{deployer}}"
-  lineinfile:
-    dest: ~/.bashrc
-    create: yes
-    line: . $HOME/.asdf/completions/asdf.bash
+- name: "source asdf in bashrc"
+  lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
+
+
+- name: "add asdf plugins"
+  command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
+  with_items:
+    - nodejs
+    - erlang
+    - elixir
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 - name: register if erlang plugin is installed
   remote_user: "{{deployer}}"
-  shell: asdf plugin-list | grep erlang
+  command: "bash -lc 'asdf plugin-list | grep erlang'"
   register: erlang_plugin
 
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
   remote_user: "{{deployer}}"
-  shell: asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git
+  command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
 
 - name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'"
