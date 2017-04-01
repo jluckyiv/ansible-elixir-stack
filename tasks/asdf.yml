@@ -1,35 +1,27 @@
 ---
-- name: "install asdf"
+- name: install asdf
   remote_user: "{{deployer}}"
   git:
-    repo: "https://github.com/asdf-vm/asdf.git"
-    dest: "~/.asdf"
-    version: "v0.2.1"
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: ~/.asdf
+    version: v0.2.1
     update: yes
 
-- name: "source asdf in bashrc"
+- name: source asdf in bashrc
   remote_user: "{{deployer}}"
   lineinfile:
-    dest: "~/.bashrc"
+    dest: ~/.bashrc
     create: yes
-    line: ". $HOME/.asdf/asdf.sh"
+    line: . $HOME/.asdf/asdf.sh
 
-- name: "asdf completions in bashrc"
+- name: asdf completions in bashrc
   remote_user: "{{deployer}}"
   lineinfile:
-    dest: "~/.bashrc"
+    dest: ~/.bashrc
     create: yes
-    line: ". $HOME/.asdf/completions/asdf.bash"
+    line: . $HOME/.asdf/completions/asdf.bash
 
-# - name: "remove asdf plugins"
-#   remote_user: "{{deployer}}"
-#   command: "bash -lc 'asdf plugin-remove {{item}}'"
-#   with_items:
-#     - nodejs
-#     - erlang
-#     - elixir
-
-- name: register erlang plugin
+- name: register if erlang plugin is installed
   remote_user: "{{deployer}}"
   command: bash -lc 'asdf plugin-list | grep erlang'
   register: erlang_plugin
@@ -37,29 +29,29 @@
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
   remote_user: "{{deployer}}"
-  command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
+  command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
 
-- name: register elixir plugin
+- name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'"
   register: elixir_plugin
 
-- name: "add elixir plugin"
+- name: add elixir plugin
   when: elixir_plugin.stdout != "elixir"
   remote_user: "{{deployer}}"
-  command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'"
+  command: bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'
 
-- name: register nodejs plugin
-  command: "bash -lc 'asdf plugin-list | grep nodejs'"
+- name: register if nodejs plugin is installed
+  command: bash -lc 'asdf plugin-list | grep nodejs'
   register: nodejs_plugin
 
-- name: "add nodejs plugin"
+- name: add nodejs plugin
   when: nodejs_plugin.stdout != "nodejs"
   remote_user: "{{deployer}}"
-  command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'"
+  command: bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
 
-- name: "add nodejs keys to keyring"
+- name: add nodejs keys to keyring
   remote_user: "{{deployer}}"
-  command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
+  command: bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'
 
 # - name: "add elm plugin"
 #   remote_user: "{{deployer}}"
