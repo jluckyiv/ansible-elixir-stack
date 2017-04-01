@@ -29,15 +29,30 @@
 #     - erlang
 #     - elixir
 
+- name: register erlang plugin
+  command: "bash -lc 'asdf plugin-list | grep erlang'"
+  register: erlang_plugin
+
 - name: "add erlang plugin"
+  when: erlang_plugin != "erlang"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
 
+- name: register elixir plugin
+  command: "bash -lc 'asdf plugin-list | grep elixir'"
+  register: elixir_plugin
+
 - name: "add elixir plugin"
+  when: elixir_plugin != "elixir"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'"
 
+- name: register nodejs plugin
+  command: "bash -lc 'asdf plugin-list | grep nodejs'"
+  register: nodejs_plugin
+
 - name: "add nodejs plugin"
+  when: nodejs_plugin != "nodejs"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'"
 
