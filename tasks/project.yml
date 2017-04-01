@@ -13,7 +13,7 @@
   command: bash -lc 'asdf install' chdir="{{ project_path }}"
   async: 1800
   become: true
-  become_user: "{{ deploy_user }}"
+  become_user: "{{ deployer }}"
 
 
 - name: "generate secret key base"
