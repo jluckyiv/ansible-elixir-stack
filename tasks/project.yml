@@ -6,7 +6,8 @@
     dest: "{{ project_path }}"
     accept_hostkey: True
     force: True
-  remote_user: "{{ deployer }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: "install tool versions"
@@ -53,7 +54,8 @@
   template:
     src: default-prod.secret.exs.j2
     dest: "{{ project_path }}/config/prod.secret.exs"
-  remote_user: "{{ deployer }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - when: custom_prod_secret_template.stat.exists == True
@@ -61,7 +63,8 @@
   template:
     src: templates/prod.secret.exs.j2
     dest: "{{ project_path }}/config/prod.secret.exs"
-  remote_user: "{{ deployer }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: check if conform config exists
@@ -74,28 +77,32 @@
   template:
     src: "templates/{{ app_name }}.conf.j2"
     dest: "{{ project_path }}/config/{{ app_name }}.conf"
-  remote_user: "{{ deployer }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: "reshim to avoid errors"
-  remote_user: "{{ deployer }}"
   command: "bash -lc 'asdf reshim erlang 19.1'"
   args:
     chdir: "{{ project_path }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: install hex
-  remote_user: "{{ deployer }}"
   command: bash -lc "mix local.hex --force"
   args:
     chdir: "{{ project_path }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: install rebar
-  remote_user: "{{ deployer }}"
   command: bash -lc "mix local.rebar --force"
   args:
     chdir: "{{ project_path }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
 
 
 - name: "fetch mix dependencies"
@@ -103,6 +110,7 @@
   args:
     chdir: "{{ project_path }}"
   async: 900
-  remote_user: "{{ deployer }}"
   environment:
     MIX_ENV: "{{ mix_env }}"
+  become_user: "{{deploy_user}}"
+  become: "{{primary_user_sudo}}"
