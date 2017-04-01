@@ -22,7 +22,8 @@
     line: ". $HOME/.asdf/completions/asdf.bash"
 
 - name: "remove asdf plugins"
-  command: "bash -lc 'asdf plugin-remove {{item}}"
+  remote_user: "{{deployer}}"
+  command: "bash -lc 'asdf plugin-remove {{item}}'"
   with_items:
     - nodejs
     - erlang
