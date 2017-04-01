@@ -12,15 +12,11 @@
 - name: "install tool versions"
   async: 1800
   remote_user: "{{ deployer }}"
-  command: bash -lc 'asdf install'
+  become: true
+  shell: "asdf install"
   args:
     chdir: "{{ project_path }}"
 
-- name: "reshim to avoid errors"
-  remote_user: "{{ deployer }}"
-  command: "bash -lc 'asdf reshim erlang 19.1'"
-  args:
-    chdir: "{{ project_path }}"
 
 - name: "generate secret key base"
   command: "openssl rand -base64 {{ secret_key_base_length }}"
@@ -81,6 +77,13 @@
     src: "templates/{{ app_name }}.conf.j2"
     dest: "{{ project_path }}/config/{{ app_name }}.conf"
   remote_user: "{{ deployer }}"
+
+
+- name: "reshim to avoid errors"
+  remote_user: "{{ deployer }}"
+  command: "bash -lc 'asdf reshim erlang 19.1'"
+  args:
+    chdir: "{{ project_path }}"
 
 
 - name: install hex
