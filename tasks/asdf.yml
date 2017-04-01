@@ -1,18 +1,42 @@
 ---
 - name: "install asdf"
-  git: repo="https://github.com/HashNuke/asdf.git" dest="~/.asdf" update=yes
   remote_user: "{{deployer}}"
-
+  git:
+    repo: "https://github.com/asdf-vm/asdf.git"
+    dest: "~/.asdf"
+    version: "v0.2.1"
+    update: yes
 
 - name: "source asdf in bashrc"
-  lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
   remote_user: "{{deployer}}"
+  lineinfile:
+    dest: "~/.bashrc"
+    create: yes
+    line: ". $HOME/.asdf/asdf.sh"
 
-
-- name: "add asdf plugins"
-  command: "bash -lc 'asdf plugin-add {{item}} https://github.com/HashNuke/asdf-{{item}}.git'"
-  with_items:
-    - nodejs
-    - erlang
-    - elixir
+- name: "asdf completions in bashrc"
   remote_user: "{{deployer}}"
+  lineinfile:
+    dest: "~/.bashrc"
+    create: yes
+    line: ". $HOME/.asdf/completions/asdf.bash"
+
+- name: "add erlang plugin"
+  remote_user: "{{deployer}}"
+  command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
+
+- name: "add elixir plugin"
+  remote_user: "{{deployer}}"
+  command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'"
+
+- name: "add nodejs plugin"
+  remote_user: "{{deployer}}"
+  command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'"
+
+- name: "add nodejs keys to keyring"
+  remote_user: "{{deployer}}"
+  command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
+
+# - name: "add elm plugin"
+#   remote_user: "{{deployer}}"
+#   command: "bash -lc 'asdf plugin-add elm https://github.com/vic/asdf-elm.git'"
