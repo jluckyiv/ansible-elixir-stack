@@ -32,9 +32,9 @@
 - name: register erlang plugin
   command: "bash -lc 'asdf plugin-list | grep erlang'"
   register: erlang_plugin
-  debug: msg="erlang_plugin = {{ erlang_plugin }}"
 
 - name: "add erlang plugin"
+  debug: msg="erlang_plugin = {{ erlang_plugin }}"
   when: erlang_plugin != "erlang"
   remote_user: "{{deployer}}"
   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
