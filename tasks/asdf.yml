@@ -1,11 +1,13 @@
 ---
 - name: "install asdf"
   git: repo="https://github.com/asdf-vm/asdf.git" dest="~/.asdf" update=yes
+  become: yes
   become_user: "{{deploy_user}}"
 
 
 - name: "source asdf in bashrc"
   lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
+  become: yes
   become_user: "{{deploy_user}}"
 
 
