@@ -12,7 +12,7 @@
 - name: "install tool versions"
   async: 1800
   remote_user: "{{ deployer }}"
-  become: true
+  sudo: true
   shell: "asdf install"
   args:
     chdir: "{{ project_path }}"
