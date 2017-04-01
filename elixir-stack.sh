@@ -2,6 +2,10 @@
 
 app_name=$(grep -m 1 -oh 'app: :[[:alnum:]_]*' mix.exs | sed 's/app:\ ://')
 git_repo_url=$(git config --get remote.origin.url)
+erlang_version=$(grep -m 1 -oh 'erlang [[:digit:]\.]*' .tool-versions)
+elixir_version=$(grep -m 1 -oh 'elixir [[:digit:]\.]*' .tool-versions)
+node_version=$(grep -m 1 -oh 'nodejs [[:digit:]\.]*' .tool-versions)
+
 mkdir -p playbooks/vars playbooks/templates
 
 cat > playbooks/setup.yml <<EOF
@@ -74,6 +78,9 @@ cat > playbooks/vars/main.yml <<EOF
 app_name: $app_name
 repo_url: "$git_repo_url"
 app_port: 3001
+erlang_version: $erlang_version
+elixir_version: $elixir_version
+node_version: $node_version
 EOF
 
 
@@ -97,18 +104,12 @@ echo '*-*-*'
 echo 'Oolaa ~! your project has been setup for deployment'
 echo '*-*-*'
 echo
+echo "TODO Add server IP address in inventory file"
+echo "TODO Edit the following values in `playbooks/vars/main.yml:`"
+echo "- app_name"
+echo "- repo_url"
+echo "- app_port"
+echo "- erlang_version"
+echo "- elixir_version"
+echo "- node_version"
 
-
-# Create .tool-versions file if not present
-
-if [ ! -f ./.tool-versions ]; then
-  cat > .tool-versions <<EOF
-erlang 18.0
-elixir 1.0.5
-nodejs 0.12.5
-EOF
-  echo "TODO Edit .tool-versions file with appropriate versions of Erlang, Elixir & Node.js required for project"
-fi
-
-echo "TODO Add server IP address to inventory file"
-echo "TODO Edit app name, app port & repo url in playbooks/vars/main.yml"
