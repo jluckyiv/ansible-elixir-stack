@@ -105,7 +105,7 @@ echo 'Oolaa ~! your project has been setup for deployment'
 echo '*-*-*'
 echo
 echo "TODO Add server IP address in inventory file"
-echo "TODO Edit the following values in `playbooks/vars/main.yml:`"
+echo "TODO Edit the following values in playbooks/vars/main.yml:"
 echo "- app_name"
 echo "- repo_url"
 echo "- app_port"
