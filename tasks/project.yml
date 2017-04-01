@@ -12,7 +12,7 @@
 
 - name: "install tool versions"
   command: bash -lc 'asdf install' chdir="{{ project_path }}"
-  async: 1800
+  # async: 1800
   become_user: "{{ deployer }}"
   # become: "{{primary_user_sudo}}"
 
