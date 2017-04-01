@@ -2,55 +2,46 @@
 - name: "install asdf"
   git: repo="https://github.com/asdf-vm/asdf.git" dest="~/.asdf" update=yes
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 
 - name: "source asdf in bashrc"
   lineinfile: dest="~/.bash_profile" create=yes line="source ~/.asdf/asdf.sh"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 
 - name: register if erlang plugin is installed
   command: "bash -lc 'asdf plugin-list | grep erlang'"
   register: erlang_plugin
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
   command: bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 
 - name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'"
   register: elixir_plugin
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 - name: add elixir plugin
   when: elixir_plugin.stdout != "elixir"
   command: bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 - name: register if nodejs plugin is installed
   command: bash -lc 'asdf plugin-list | grep nodejs'
   register: nodejs_plugin
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 - name: add nodejs plugin
   when: nodejs_plugin.stdout != "nodejs"
   command: bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
 - name: add nodejs keys to keyring
   command: bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
 
