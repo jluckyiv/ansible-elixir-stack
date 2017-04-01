@@ -7,14 +7,14 @@
     accept_hostkey: True
     force: True
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
 - name: "install tool versions"
   command: bash -lc 'asdf install' chdir="{{ project_path }}"
   async: 1800
-  become: true
   become_user: "{{ deployer }}"
+  # become: "{{primary_user_sudo}}"
 
 
 - name: "generate secret key base"
@@ -55,7 +55,7 @@
     src: default-prod.secret.exs.j2
     dest: "{{ project_path }}/config/prod.secret.exs"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
 - when: custom_prod_secret_template.stat.exists == True
@@ -64,7 +64,7 @@
     src: templates/prod.secret.exs.j2
     dest: "{{ project_path }}/config/prod.secret.exs"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
 - name: check if conform config exists
@@ -78,15 +78,15 @@
     src: "templates/{{ app_name }}.conf.j2"
     dest: "{{ project_path }}/config/{{ app_name }}.conf"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
-- name: "reshim to avoid errors"
-  command: "bash -lc 'asdf reshim erlang 19.1'"
-  args:
-    chdir: "{{ project_path }}"
+# - name: "reshim to avoid errors"
+#   command: "bash -lc 'asdf reshim erlang 19.1'"
+#   args:
+#     chdir: "{{ project_path }}"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+#   become: "{{primary_user_sudo}}"
 
 
 - name: install hex
@@ -94,7 +94,7 @@
   args:
     chdir: "{{ project_path }}"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
 - name: install rebar
@@ -102,7 +102,7 @@
   args:
     chdir: "{{ project_path }}"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
 
 
 - name: "fetch mix dependencies"
@@ -113,4 +113,4 @@
   environment:
     MIX_ENV: "{{ mix_env }}"
   become_user: "{{deploy_user}}"
-  become: "{{primary_user_sudo}}"
+  # become: "{{primary_user_sudo}}"
