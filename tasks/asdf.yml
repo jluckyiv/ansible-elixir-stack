@@ -14,7 +14,7 @@
 - name: register if erlang plugin is installed
   command: "bash -lc 'asdf plugin-list | grep erlang'"
   register: erlang_plugin
-  async: 45
+  async: 1800
   become: yes
   become_user: "{{deploy_user}}"
 
@@ -22,7 +22,7 @@
 - name: add erlang plugin
   when: erlang_plugin.stdout != "erlang"
   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
-  async: 600
+  async: 1800
   become: yes
   become_user: "{{deploy_user}}"
 
