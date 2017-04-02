@@ -29,6 +29,7 @@
 
 - name: register if elixir plugin is installed
   command: "bash -lc 'asdf plugin-list | grep elixir'" 
+  async: 1800
   register: elixir_plugin
   become: yes
   become_user: "{{deploy_user}}"
@@ -36,11 +37,13 @@
 - name: add elixir plugin
   when: elixir_plugin.stdout is not defined
   command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'" 
+  async: 1800
   become: yes
   become_user: "{{deploy_user}}"
 
 - name: register if nodejs plugin is installed
   command: "bash -lc 'asdf plugin-list | grep nodejs'" 
+  async: 1800
   register: nodejs_plugin
   become: yes
   become_user: "{{deploy_user}}"
@@ -48,11 +51,13 @@
 - name: add nodejs plugin
   when: nodejs_plugin.stdout is not defined
   command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'" 
+  async: 1800
   become: yes
   become_user: "{{deploy_user}}"
 
 - name: add nodejs keys to keyring
   command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
+  async: 1800
   become: yes
   become_user: "{{deploy_user}}"
 
