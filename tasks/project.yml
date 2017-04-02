@@ -7,7 +7,6 @@
     accept_hostkey: True
     force: True
   become_user: "{{deploy_user}}"
-  become: true
 
 
 - name: "install tool versions"
