@@ -1,21 +1,25 @@
 ---
-- name: "set npm jobs config"
-  command: bash -lc "npm config set jobs {{ npm_config_jobs }}"
-  remote_user: "{{ deployer }}"
-  args:
-    chdir: "{{ project_path }}/{{ frontend_dir }}"
+# - name: "set npm jobs config"
+#   command: bash -lc "npm config set jobs {{ npm_config_jobs }}"
+#   remote_user: "{{ deployer }}"
+#   args:
+#     chdir: "{{ project_path }}/{{ frontend_dir }}"
+#
+#
+# - when: npm_config_install_production == True
+#   name: calculate npm install options
+#   set_fact: npm_install_options="--production"
+#
+#
+# - name: "fetch npm dependencies"
+#   command: bash -lc "npm install {{npm_install_options}}" chdir="{{ project_path }}/{{ frontend_dir }}"
+#   become: true
+#   async: 1800
 
 
-- when: npm_config_install_production == True
-  name: calculate npm install options
-  set_fact: npm_install_options="--production"
-
-
-- name: "fetch npm dependencies"
-  command: bash -lc "npm install {{npm_install_options}}" chdir="{{ project_path }}/{{ frontend_dir }}"
-  become: true
-  async: 1800
-
+- name: npm install
+  npm:
+    path: "{{project_path}}"
 
 - name: check for bower.json
   stat: path="{{ project_path }}/{{frontend_dir}}/bower.json"
