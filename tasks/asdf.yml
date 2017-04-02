@@ -11,54 +11,60 @@
   become_user: "{{deploy_user}}"
 
 
-# - name: register if erlang plugin is installed
-#   command: "bash -lc 'asdf plugin-list | grep erlang'"
-#   args:
-#     chdir: "{{project_path}}"
-#   register: erlang_plugin
-#   become_user: "{{deploy_user}}"
-#   async: 1800
-#
-#
-# - name: add erlang plugin
-#   when: erlang_plugin.stdout != "erlang"
-#   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
-#   args:
-#     chdir: "{{project_path}}"
-#   become_user: "{{deploy_user}}"
-#
-#
-# - name: register if elixir plugin is installed
-#   command: "bash -lc 'asdf plugin-list | grep elixir'" 
-#   args:
-#     chdir: "{{project_path}}"
-#   register: elixir_plugin
-#   become_user: "{{deploy_user}}"
-#
-# - name: add elixir plugin
-#   when: elixir_plugin.stdout != "elixir"
-#   command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'" 
-#   args:
-#     chdir: "{{project_path}}"
-#   become_user: "{{deploy_user}}"
-#
-# - name: register if nodejs plugin is installed
-#   command: "bash -lc 'asdf plugin-list | grep nodejs'" 
-#   args:
-#     chdir: "{{project_path}}"
-#   register: nodejs_plugin
-#   become_user: "{{deploy_user}}"
-#
-# - name: add nodejs plugin
-#   when: nodejs_plugin.stdout != "nodejs"
-#   command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'" 
-#   args:
-#     chdir: "{{project_path}}"
-#   become_user: "{{deploy_user}}"
-#
-# - name: add nodejs keys to keyring
-#   command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
-#   args:
-#     chdir: "{{project_path}}"
-#   become_user: "{{deploy_user}}"
-#
+- name: register if erlang plugin is installed
+  command: "bash -lc 'asdf plugin-list | grep erlang'"
+  args:
+    chdir: "{{project_path}}"
+  register: erlang_plugin
+  become: yes
+  become_user: "{{deploy_user}}"
+
+
+- name: add erlang plugin
+  when: erlang_plugin.stdout != "erlang"
+  command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
+  args:
+    chdir: "{{project_path}}"
+  become: yes
+  become_user: "{{deploy_user}}"
+
+
+- name: register if elixir plugin is installed
+  command: "bash -lc 'asdf plugin-list | grep elixir'" 
+  args:
+    chdir: "{{project_path}}"
+  register: elixir_plugin
+  become: yes
+  become_user: "{{deploy_user}}"
+
+- name: add elixir plugin
+  when: elixir_plugin.stdout != "elixir"
+  command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'" 
+  args:
+    chdir: "{{project_path}}"
+  become: yes
+  become_user: "{{deploy_user}}"
+
+- name: register if nodejs plugin is installed
+  command: "bash -lc 'asdf plugin-list | grep nodejs'" 
+  args:
+    chdir: "{{project_path}}"
+  register: nodejs_plugin
+  become: yes
+  become_user: "{{deploy_user}}"
+
+- name: add nodejs plugin
+  when: nodejs_plugin.stdout != "nodejs"
+  command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'" 
+  args:
+    chdir: "{{project_path}}"
+  become: yes
+  become_user: "{{deploy_user}}"
+
+- name: add nodejs keys to keyring
+  command: "bash -lc 'bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring'"
+  args:
+    chdir: "{{project_path}}"
+  become: yes
+  become_user: "{{deploy_user}}"
+
