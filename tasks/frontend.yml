@@ -15,6 +15,7 @@
 - name: "fetch npm dependencies"
   command: bash -lc "npm install {{npm_install_options}}" chdir="{{ project_path }}/{{ frontend_dir }}"
   become_user: "{{ deployer }}"
+  become: true
   # async: 1800
 
 
