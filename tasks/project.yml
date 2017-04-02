@@ -54,7 +54,6 @@
     src: default-prod.secret.exs.j2
     dest: "{{ project_path }}/config/prod.secret.exs"
   become_user: "{{deploy_user}}"
-  become: true
 
 
 - when: custom_prod_secret_template.stat.exists == True
