@@ -1,5 +1,5 @@
 ---
-- include: common.yml
+# - include: common.yml
 
 - name: "check for swap file path"
   stat: path="/swap"
@@ -10,10 +10,10 @@
   include: create-swap-file.yml
 
 
-- include: pip.yml
 - include: deployer-user.yml
 
 
+- include: pip.yml
 - when: setup_postgres == True
   include: postgres-facts.yml
 
@@ -22,16 +22,14 @@
   include: postgres.yml
 
 
-- include: project.yml
-
-
-- when: build_frontend == True
-  include: frontend.yml
+# - include: project.yml
+# - when: build_frontend == True
+#   include: frontend.yml
 
 
 - include: nginx.yml
 - include: monit.yml
-- include: release.yml
+# - include: release.yml
 
 
 - name: start nginx using monit
