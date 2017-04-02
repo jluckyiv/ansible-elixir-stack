@@ -99,16 +99,5 @@ echo '*-*-*'
 echo
 
 
-# Create .tool-versions file if not present
-
-if [ ! -f ./.tool-versions ]; then
-  cat > .tool-versions <<EOF
-erlang 18.0
-elixir 1.0.5
-nodejs 0.12.5
-EOF
-  echo "TODO Edit .tool-versions file with appropriate versions of Erlang, Elixir & Node.js required for project"
-fi
-
 echo "TODO Add server IP address to inventory file"
 echo "TODO Edit app name, app port & repo url in playbooks/vars/main.yml"
