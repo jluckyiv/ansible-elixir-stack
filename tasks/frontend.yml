@@ -33,7 +33,7 @@
 
 - name: "build frontend assets"
   command: bash -lc "{{ frontend_build_command }}"
-  become_user: "{{ deployer }}"
+  remote_user: "{{ deployer }}"
   args:
     chdir: "{{ project_path }}/{{ frontend_dir }}"
 
