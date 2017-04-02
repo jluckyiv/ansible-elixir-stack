@@ -20,7 +20,8 @@
 - name: npm install
   npm:
     path: "{{project_path}}"
-  remote_user: "{{ deployer }}"
+  become_user: "{{ deployer }}"
+  become: true
 
 - name: check for bower.json
   stat: path="{{ project_path }}/{{frontend_dir}}/bower.json"
