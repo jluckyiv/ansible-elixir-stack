@@ -20,7 +20,7 @@
 
 
 - name: add erlang plugin
-  when: erlang_plugin.stdout != "erlang"
+  when: erlang_plugin.stdout is not defined
   command: "bash -lc 'asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'"
   async: 1800
   become: yes
@@ -34,7 +34,7 @@
   become_user: "{{deploy_user}}"
 
 - name: add elixir plugin
-  when: elixir_plugin.stdout != "elixir"
+  when: elixir_plugin.stdout is not defined
   command: "bash -lc 'asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'" 
   become: yes
   become_user: "{{deploy_user}}"
@@ -46,7 +46,7 @@
   become_user: "{{deploy_user}}"
 
 - name: add nodejs plugin
-  when: nodejs_plugin.stdout != "nodejs"
+  when: nodejs_plugin.stdout is not defined
   command: "bash -lc 'asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'" 
   become: yes
   become_user: "{{deploy_user}}"
