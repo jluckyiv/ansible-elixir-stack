@@ -13,7 +13,7 @@
 
 - name: "fetch npm dependencies"
   command: bash -lc "npm install {{npm_install_options}}" chdir="{{ project_path }}/{{ frontend_dir }}"
-  remote_user: "{{ deployer }}"
+  become: true
   async: 1800
 
 
@@ -33,7 +33,6 @@
 - name: "build frontend assets"
   command: bash -lc "{{ frontend_build_command }}"
   become: true
-  become_user: "{{ deployer }}"
   args:
     chdir: "{{ project_path }}/{{ frontend_dir }}"
 
