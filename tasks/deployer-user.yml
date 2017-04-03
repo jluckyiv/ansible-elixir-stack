@@ -1,16 +1,17 @@
 ---
-- name: "create deployer user"
-  user: name="{{deployer}}" shell=/bin/bash
+# Could use Stouts.deploy in the future
+
+- name: create deployer user
+  user: name="{{ deployer }}" shell=/bin/bash
 
 
 - name: copy authorized key to deployer user
   authorized_key:
-    user: deployer
-    state: present
+    user: "{{ deployer }}"
     key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    state: present
 
 
-
-- name: "ensure projects directory"
+- name: ensure projects directory
   file: path="~/projects" state=directory
   remote_user: "{{ deployer }}"
