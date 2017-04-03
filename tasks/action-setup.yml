@@ -11,7 +11,9 @@
   include: postgres.yml
 
 
-- include: nginx.yml
+- name: disable nginx
+  service: name=nginx enabled=no state=stopped
+
 - include: monit.yml
 
 
