@@ -7,11 +7,12 @@
   apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 
 
-- name: install postgres & libpq-dev
-  apt: name="{{ item }}" update_cache=yes state=present
+- name: install postgres & libpq-dev & pip
+  package: name="{{ item }}" update_cache=yes state=present
   with_items:
     - postgresql-9.4
     - libpq-dev
+    - python-pip
 
 
 - name: install psycopg2 python module
