@@ -1,13 +1,13 @@
 ---
-- name: "add postgres repository"
-  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"
+- name: add postgres repository
+  apt_repository: repo=deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
 
 
-- name: "add postgres repository key"
-  apt_key: url="https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+- name: add postgres repository key
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
 
-- name: "install postgres & libpq-dev"
+- name: install postgres & libpq-dev
   apt: name="{{ item }}" update_cache=yes state=present
   with_items:
     - postgresql-9.4
@@ -27,7 +27,7 @@
   become_user: postgres
 
 
-- name: "create database"
+- name: create deployer database
   postgresql_db: name="{{ deployer }}" encoding="UTF-8"
   become: yes
   become_user: postgres
