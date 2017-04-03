@@ -1,14 +1,8 @@
 ---
 # - include: common.yml
 
-- name: check for swap file path
-  stat: path="/swap"
-  register: swap_info
-
-- name: create swap file
-  when: create_swap_file == True and swap_info.stat.exists == False
-  include: create-swap-file.yml
-
+roles:
+  - kamaln7.swapfile
 
 - include: deployer-user.yml
 
