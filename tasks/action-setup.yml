@@ -11,7 +11,8 @@
   include: postgres.yml
 
 
-- name: disable nginx
+# - include: nginx.yml
+- name: "disable nginx and don't start service on reboot"
   service: name=nginx enabled=no state=stopped
 
 - include: monit.yml
