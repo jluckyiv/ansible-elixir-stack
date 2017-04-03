@@ -12,7 +12,8 @@ cat > playbooks/setup.yml <<EOF
     - vars/main.yml
 
   roles:
-    - {role: "HashNuke.elixir-stack", action: "setup"}
+    - {role: kamaln7.swapfile}
+    - {role: HashNuke.elixir-stack, action: setup}
 EOF
 
 
@@ -24,7 +25,7 @@ cat > playbooks/deploy.yml <<EOF
     - vars/main.yml
 
   roles:
-    - {role: "HashNuke.elixir-stack", action: "deploy"}
+    - {role: HashNuke.elixir-stack, action: deploy}
 EOF
 
 
@@ -36,7 +37,7 @@ cat > playbooks/migrate.yml <<EOF
     - vars/main.yml
 
   roles:
-    - {role: "HashNuke.elixir-stack", action: "migrate"}
+    - {role: HashNuke.elixir-stack, action: migrate}
 EOF
 
 

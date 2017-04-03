@@ -1,10 +1,6 @@
 ---
 # - include: common.yml
 
-roles:
-  - kamaln7.swapfile
-
-
 - include: deployer_user.yml
 
 
