@@ -1,12 +1,13 @@
 ---
 # - include: common.yml
 
-- name: "check for swap file path"
+- name: check for swap file path
   stat: path="/swap"
   register: swap_info
 
 
-- when: create_swap_file == True and swap_info.stat.exists == False
+- name: create swap file
+  when: create_swap_file == True and swap_info.stat.exists == False
   include: create-swap-file.yml
 
 
@@ -22,18 +23,18 @@
   include: postgres.yml
 
 
+- include: nginx.yml
+- include: monit.yml
+
+
 # - include: project.yml
 # - when: build_frontend == True
 #   include: frontend.yml
-
-
-- include: nginx.yml
-- include: monit.yml
 # - include: release.yml
 
 
 - name: start nginx using monit
-  monit: name="nginx" state=started
+  monit: name=nginx state=started
 
 
 - name: reload nginx config
