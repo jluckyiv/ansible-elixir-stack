@@ -28,6 +28,6 @@
 
 
 - name: "create database"
-  postgresql_db: name="{{ database_name }}" encoding="UTF-8"
+  postgresql_db: name="{{ deployer }}" encoding="UTF-8"
   become: yes
   become_user: postgres
