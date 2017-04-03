@@ -20,6 +20,9 @@
 # - include: release.yml
 
 
+- name: "disable nginx and don't start service on reboot"
+  service: name=nginx enabled=no state=stopped
+
 - name: start nginx using monit
   monit: name=nginx state=started
 
