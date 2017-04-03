@@ -5,7 +5,6 @@
   stat: path="/swap"
   register: swap_info
 
-
 - name: create swap file
   when: create_swap_file == True and swap_info.stat.exists == False
   include: create-swap-file.yml
@@ -15,9 +14,10 @@
 
 
 - include: pip.yml
+
+
 - when: setup_postgres == True
   include: postgres-facts.yml
-
 
 - when: setup_postgres == True
   include: postgres.yml
