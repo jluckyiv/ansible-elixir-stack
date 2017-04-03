@@ -8,9 +8,6 @@ roles:
 - include: deployer_user.yml
 
 
-- include: pip.yml
-
-
 - when: setup_postgres == True
   include: postgres-facts.yml
 
