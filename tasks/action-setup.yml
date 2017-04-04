@@ -4,14 +4,14 @@
 - include: deployer_user.yml
 
 
-- when: setup_postgres == True
-  include: postgres-facts.yml
-
-- when: setup_postgres == True
-  include: postgres.yml
-
-
-- include: monit.yml
+# - when: setup_postgres == True
+#   include: postgres-facts.yml
+#
+# - when: setup_postgres == True
+#   include: postgres.yml
+#
+#
+# - include: monit.yml
 
 
 # - include: project.yml
@@ -19,9 +19,6 @@
 #   include: frontend.yml
 # - include: release.yml
 
-
-- name: "disable nginx and don't start service on reboot"
-  service: name=nginx state=stopped
 
 - name: start nginx using monit
   monit: name=nginx state=started
