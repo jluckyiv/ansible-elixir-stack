@@ -37,7 +37,7 @@
 
 - name: create postgres user for deploy user
   postgresql_user:
-    name: "{{ deployer }}"
+    name: "{{ deploy_user }}"
     password: "{{ database_password }}"
     role_attr_flags: CREATEDB,SUPERUSER
   become: "{{primary_user_sudo}}"
