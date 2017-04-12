@@ -15,7 +15,7 @@
   apt: name="{{ item }}" update_cache=yes state=present
   with_items:
     - libpq-dev
-    - libpq-dev5
+    # - libpq-dev5
   become: "{{primary_user_sudo}}"
   when: (postgres_install == "remote" or postgres_install == "local")
 
